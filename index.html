@@ -5,240 +5,211 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Una Carta para Ti</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400&family=Dancing+Script:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 
 <style>
-:root {
-    --sobre: #b08968;
-    --sobre-claro: #e6ccb2;
-    --papel: #fffefa;
-    --texto: #3b3b3b;
-    --lacre: #7a0c0c;
+:root{
+  --fondo1:#ff758c;
+  --fondo2:#ff7eb3;
+  --sobre:#ffb703;
+  --sobre2:#ffd166;
+  --papel:#fffdf5;
+  --lacre:#d62828;
 }
 
-/* ===== FONDO EMOCIONAL ===== */
-body {
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Montserrat', sans-serif;
-    background: linear-gradient(135deg, #1c1c1c, #2b2b2b, #3a2f2f);
-    overflow: hidden;
-}
-
-body::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
-    background-size: 70px 70px;
-    opacity: 0.15;
+/* ===== FONDO VIVO ===== */
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Montserrat',sans-serif;
+  background:linear-gradient(135deg,var(--fondo1),var(--fondo2));
+  overflow:hidden;
 }
 
 /* ===== ESCENA ===== */
-.scene {
-    perspective: 1800px;
-    z-index: 2;
+.scene{
+  perspective:1400px;
 }
 
 /* ===== SOBRE ===== */
-.envelope {
-    width: 360px;
-    height: 240px;
-    position: relative;
-    background: linear-gradient(135deg, var(--sobre), #9c6b4a);
-    border-radius: 6px;
-    box-shadow: 0 35px 80px rgba(0,0,0,0.6);
-    cursor: pointer;
+.envelope{
+  width:360px;
+  height:240px;
+  position:relative;
+  background:linear-gradient(135deg,var(--sobre),var(--sobre2));
+  border-radius:8px;
+  box-shadow:0 25px 50px rgba(0,0,0,.4);
+  cursor:pointer;
 }
 
 /* Frente */
-.envelope::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 180px 120px 180px;
-    border-color: transparent transparent var(--sobre-claro) transparent;
+.envelope::before{
+  content:'';
+  position:absolute;
+  bottom:0;
+  width:0;height:0;
+  border-style:solid;
+  border-width:0 180px 120px 180px;
+  border-color:transparent transparent #ffd166 transparent;
 }
 
 /* Solapa */
-.flap {
-    position: absolute;
-    top: 0;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 130px 180px 0 180px;
-    border-color: var(--sobre) transparent transparent transparent;
-    transform-origin: top;
-    transition: transform 1s ease;
-    z-index: 5;
+.flap{
+  position:absolute;
+  top:0;
+  width:0;height:0;
+  border-style:solid;
+  border-width:130px 180px 0 180px;
+  border-color:#ffb703 transparent transparent transparent;
+  transform-origin:top;
+  transition:transform .8s ease;
+  z-index:5;
 }
 
 /* Lacre */
-.seal {
-    position: absolute;
-    top: 105px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 54px;
-    height: 54px;
-    background: radial-gradient(circle at top, #a40000, var(--lacre));
-    border-radius: 50%;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    z-index: 6;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 0.6s ease;
+.seal{
+  position:absolute;
+  top:105px;
+  left:50%;
+  transform:translateX(-50%);
+  width:55px;height:55px;
+  background:radial-gradient(circle at top,#ff4d4d,var(--lacre));
+  border-radius:50%;
+  box-shadow:0 4px 10px rgba(0,0,0,.4);
+  z-index:6;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  transition:opacity .4s ease;
 }
-
-.seal::after {
-    content: '♥';
-    color: rgba(255,255,255,0.5);
-    font-size: 22px;
+.seal::after{
+  content:'♥';
+  color:white;
+  font-size:22px;
 }
 
 /* ===== CARTA ===== */
-.letter {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 480px;
-    max-width: 90%;
-    background: linear-gradient(#fffefa, #f3efe6);
-    padding: 45px 50px;
-    border-radius: 6px;
-    transform: translate(-50%, 20%) scale(0.85);
-    opacity: 0;
-    box-shadow: 0 30px 70px rgba(0,0,0,0.45);
-    transition: all 1.2s ease;
-    z-index: 10;
-    max-height: 75vh;
-    overflow-y: auto;
+.letter{
+  position:absolute;
+  left:15px;
+  right:15px;
+  bottom:15px;
+  top:15px;
+  background:var(--papel);
+  padding:25px 28px;
+  border-radius:6px;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+  transform:translateY(0);
+  transition:all .9s ease;
+  z-index:1;
+  overflow-y:auto;
 }
 
-/* ESTADO ABIERTO */
-.envelope.open .flap {
-    transform: rotateX(180deg);
+/* ABIERTO */
+.envelope.open .flap{
+  transform:rotateX(180deg);
 }
-
-.envelope.open .seal {
-    opacity: 0;
+.envelope.open .seal{
+  opacity:0;
 }
-
-.envelope.open .letter {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+.envelope.open .letter{
+  transform:translateY(-140px) scale(1.05);
+  z-index:10;
 }
 
 /* TEXTO */
-.letter h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    margin-bottom: 25px;
-    text-align: center;
-    color: #2a2a2a;
+.letter h2{
+  font-family:'Playfair Display',serif;
+  font-size:20px;
+  margin-bottom:15px;
+  color:#333;
+}
+.letter p{
+  font-size:14px;
+  line-height:1.8;
+  color:#444;
+  text-align:justify;
+  margin-bottom:14px;
+}
+.signature{
+  margin-top:20px;
+  font-family:'Dancing Script',cursive;
+  font-size:24px;
+  color:#d62828;
+  text-align:right;
 }
 
-.letter p {
-    font-size: 15px;
-    line-height: 1.9;
-    color: var(--texto);
-    margin-bottom: 18px;
-    text-align: justify;
+/* Indicador */
+.hint{
+  position:absolute;
+  bottom:-45px;
+  width:100%;
+  text-align:center;
+  color:white;
+  font-size:12px;
+  letter-spacing:3px;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%,100%{opacity:.5}
+  50%{opacity:1}
 }
 
-.signature {
-    margin-top: 35px;
-    font-family: 'Dancing Script', cursive;
-    font-size: 26px;
-    color: var(--lacre);
-    text-align: right;
-}
-
-/* SCROLL */
-.letter::-webkit-scrollbar {
-    width: 5px;
-}
-.letter::-webkit-scrollbar-thumb {
-    background: #d2c5b5;
-    border-radius: 10px;
-}
-
-/* INDICACIÓN */
-.hint {
-    position: absolute;
-    bottom: -55px;
-    width: 100%;
-    text-align: center;
-    color: rgba(255,255,255,0.6);
-    font-size: 11px;
-    letter-spacing: 3px;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0%,100%{opacity:.4}
-    50%{opacity:1}
+/* Scroll */
+.letter::-webkit-scrollbar{width:4px}
+.letter::-webkit-scrollbar-thumb{
+  background:#ffb703;
+  border-radius:10px;
 }
 </style>
 </head>
 
 <body>
 <div class="scene">
-    <div class="envelope" onclick="toggleEnvelope()">
-        <div class="flap"></div>
-        <div class="seal"></div>
-        <div class="hint">Toca el sobre</div>
-    </div>
-</div>
+  <div class="envelope" onclick="toggleEnvelope()">
+    <div class="flap"></div>
+    <div class="seal"></div>
 
-<div class="letter">
-    <h1>Para Zarela Roedríguez</h1>
+    <div class="letter">
+      <h2>Para Zarela Roedríguez</h2>
 
-    <p>
-        No sé por dónde empezar, porque hay recuerdos que pesan más que las palabras.
-        Momentos simples, miradas, risas que quedaron guardadas en mí y que el tiempo
-        no ha podido borrar.
-    </p>
+      <p>
+        Quería escribirte algo que quedara, algo que no se lo llevara el tiempo.
+        Porque aunque las cosas cambiaron, lo vivido fue real y marcó una parte
+        importante de mi vida.
+      </p>
 
-    <p>
-        Sé que fallé. Sé que lastimé algo hermoso. Y aunque no busco justificarme,
-        necesito que sepas que cada error me enseñó cuánto valías realmente.
-        A veces entendemos tarde lo que tuvimos frente al corazón.
-    </p>
+      <p>
+        Compartimos momentos simples que hoy se sienten enormes: risas sin razón,
+        conversaciones largas, silencios cómodos. Todo eso vive conmigo.
+      </p>
 
-    <p>
-        Contigo aprendí lo que significa compartir silencios, confiar, sentir hogar
-        en una persona. Nada de eso fue mentira. Todo fue real. Todo fue sincero.
-    </p>
+      <p>
+        Fallé, y lo sé. No siempre supe cuidar lo que más importaba. Pero si algo
+        aprendí de nosotros, es que el amor deja huella incluso cuando termina.
+      </p>
 
-    <p>
-        Hoy no escribo para volver, ni para pedir nada. Solo para agradecerte por
-        lo vivido, por lo que fui contigo y por lo que, sin saberlo, me ayudaste a ser.
-    </p>
+      <p>
+        No escribo para volver, solo para agradecerte. Por lo que fuiste, por lo que
+        significaste y por lo que me enseñaste sin darte cuenta.
+      </p>
 
-    <p>
-        Te deseo una vida llena de paz, de sonrisas auténticas y de alguien que sepa
-        cuidarte como mereces. Yo te llevaré conmigo, en silencio, con respeto,
-        sin reproches.
-    </p>
-
-    <div class="signature">
-        Siempre tuyo,<br>
+      <div class="signature">
+        Con cariño,<br>
         Jhon
+      </div>
     </div>
+
+    <div class="hint">Toca el sobre</div>
+  </div>
 </div>
 
 <script>
-function toggleEnvelope() {
-    document.querySelector('.envelope').classList.toggle('open');
+function toggleEnvelope(){
+  document.querySelector('.envelope').classList.toggle('open');
 }
 </script>
 </body>
