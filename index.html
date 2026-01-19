@@ -8,175 +8,194 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400&family=Dancing+Script:wght@500&display=swap" rel="stylesheet">
 
 <style>
-    :root {
-        --color-sobre: #a67c52;
-        --color-sobre-claro: #c2a382;
-        --color-papel: #fffdf8;
-        --color-lacre: #8b0000;
-    }
+:root {
+    --color-sobre: #b08968;
+    --color-sobre-claro: #ddb892;
+    --color-papel: #fffdf8;
+    --color-lacre: #7a0c0c;
+}
 
-    body {
-        margin: 0;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: radial-gradient(circle at center, #3d3d3d, #1a1a1a);
-        font-family: 'Montserrat', sans-serif;
-        overflow: hidden;
-    }
+/* ===== FONDO MEJORADO ===== */
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    overflow: hidden;
 
-    .scene {
-        perspective: 1500px;
-    }
+    background:
+        radial-gradient(circle at top, rgba(255,255,255,0.08), transparent 40%),
+        radial-gradient(circle at bottom, rgba(255,180,180,0.08), transparent 45%),
+        linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+}
 
-    .envelope {
-        width: 350px;
-        height: 230px;
-        position: relative;
-        background: var(--color-sobre);
-        border-radius: 4px;
-        box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-        cursor: pointer;
-        transform-style: preserve-3d;
-        transition: transform 0.6s ease;
-    }
+/* Suave animación ambiental */
+body::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.15;
+    animation: drift 60s linear infinite;
+}
 
-    /* Cara frontal del sobre */
-    .envelope::before {
-        content: '';
-        position: absolute;
-        z-index: 2;
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 0 175px 115px 175px;
-        border-color: transparent transparent var(--color-sobre-claro) transparent;
-        bottom: 0;
-        filter: drop-shadow(0 -2px 2px rgba(0,0,0,0.1));
-    }
+@keyframes drift {
+    from { background-position: 0 0; }
+    to { background-position: 600px 600px; }
+}
 
-    /* Solapa */
-    .flap {
-        position: absolute;
-        top: 0;
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 120px 175px 0 175px;
-        border-color: var(--color-sobre) transparent transparent transparent;
-        transform-origin: top;
-        transition: transform 0.5s ease 0.3s, z-index 0.2s ease 0.4s;
-        z-index: 4;
-    }
+.scene {
+    perspective: 1600px;
+    position: relative;
+    z-index: 2;
+}
 
-    /* Sello de lacre */
-    .seal {
-        position: absolute;
-        top: 100px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 50px;
-        height: 50px;
-        background: var(--color-lacre);
-        border-radius: 50%;
-        z-index: 5;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: opacity 0.3s ease;
-    }
+.envelope {
+    width: 350px;
+    height: 230px;
+    position: relative;
+    background: linear-gradient(135deg, var(--color-sobre), #9c6b4a);
+    border-radius: 6px;
+    box-shadow:
+        0 35px 80px rgba(0,0,0,0.55),
+        inset 0 0 10px rgba(255,255,255,0.1);
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+}
 
-    .seal::after {
-        content: '♥';
-        color: rgba(255,255,255,0.4);
-        font-size: 20px;
-    }
+/* Frente */
+.envelope::before {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 175px 115px 175px;
+    border-color: transparent transparent var(--color-sobre-claro) transparent;
+    bottom: 0;
+}
 
-    /* Carta */
-    .letter {
-        position: absolute;
-        left: 10px;
-        right: 10px;
-        bottom: 10px;
-        top: 10px;
-        background: var(--color-papel);
-        padding: 30px;
-        box-shadow: 0 0 15px rgba(0,0,0,0.1);
-        border-radius: 2px;
-        transform: translateY(0);
-        transition: all 0.7s ease;
-        z-index: 1;
-        overflow-y: auto;
-        max-height: 200px;
-    }
+/* Solapa */
+.flap {
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 120px 175px 0 175px;
+    border-color: var(--color-sobre) transparent transparent transparent;
+    transform-origin: top;
+    transition: transform 0.6s ease 0.3s, z-index 0.2s ease 0.4s;
+    z-index: 4;
+}
 
-    /* Estados abiertos */
-    .envelope.open .flap {
-        transform: rotateX(180deg);
-        z-index: 0;
-    }
+/* Lacre */
+.seal {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 52px;
+    height: 52px;
+    background: radial-gradient(circle at top, #a40000, var(--color-lacre));
+    border-radius: 50%;
+    z-index: 5;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease;
+}
 
-    .envelope.open .seal {
-        opacity: 0;
-        pointer-events: none;
-    }
+.seal::after {
+    content: '♥';
+    color: rgba(255,255,255,0.5);
+    font-size: 22px;
+}
 
-    .envelope.open .letter {
-        transform: translateY(-130px) scale(1.05);
-        z-index: 10;
-        max-height: 380px;
-        height: auto;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
+/* Carta */
+.letter {
+    position: absolute;
+    inset: 10px;
+    background: linear-gradient(#fffdf8, #f7f3eb);
+    padding: 30px;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+    border-radius: 3px;
+    transition: all 0.8s ease;
+    z-index: 1;
+    overflow-y: auto;
+    max-height: 200px;
+}
 
-    /* Texto de la carta */
-    .letter p {
-        margin: 0 0 15px;
-        font-size: 14px;
-        line-height: 1.8;
-        color: #444;
-        text-align: justify;
-    }
+/* Abierto */
+.envelope.open .flap {
+    transform: rotateX(180deg);
+    z-index: 0;
+}
 
-    .letter strong {
-        font-family: 'Playfair Display', serif;
-        font-size: 18px;
-        display: block;
-        margin-bottom: 5px;
-        color: #222;
-    }
+.envelope.open .seal {
+    opacity: 0;
+}
 
-    .signature {
-        margin-top: 25px;
-        font-family: 'Dancing Script', cursive;
-        font-size: 22px;
-        color: #8b0000;
-        text-align: right !important;
-    }
+.envelope.open .letter {
+    transform: translateY(-140px) scale(1.06);
+    z-index: 10;
+    max-height: 400px;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.4);
+}
 
-    .hint {
-        position: absolute;
-        bottom: -50px;
-        width: 100%;
-        text-align: center;
-        color: rgba(255,255,255,0.5);
-        font-size: 12px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        animation: pulse 2s infinite;
-    }
+/* Texto */
+.letter p {
+    margin: 0 0 15px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #444;
+    text-align: justify;
+}
 
-    @keyframes pulse {
-        0%, 100% { opacity: 0.4; }
-        50% { opacity: 1; }
-    }
+.letter strong {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    display: block;
+    margin-bottom: 5px;
+}
 
-    /* Scrollbar minimalista para la carta */
-    .letter::-webkit-scrollbar { width: 4px; }
-    .letter::-webkit-scrollbar-track { background: transparent; }
-    .letter::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 10px; }
+.signature {
+    margin-top: 25px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 24px;
+    color: #7a0c0c;
+    text-align: right;
+}
+
+/* Hint */
+.hint {
+    position: absolute;
+    bottom: -55px;
+    width: 100%;
+    text-align: center;
+    color: rgba(255,255,255,0.6);
+    font-size: 11px;
+    letter-spacing: 3px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%,100%{opacity:.4}
+    50%{opacity:1}
+}
+
+/* Scroll */
+.letter::-webkit-scrollbar { width: 4px; }
+.letter::-webkit-scrollbar-thumb {
+    background: #d0c6b8;
+    border-radius: 10px;
+}
 </style>
 </head>
 
@@ -185,30 +204,28 @@
     <div class="envelope" onclick="toggleEnvelope()">
         <div class="flap"></div>
         <div class="seal"></div>
+
         <div class="letter">
             <p><strong>Para Zarela Roedríguez</strong></p>
             <p>Querida Zarela,</p>
             <p>
-                Quiero empezar disculpándome por haber sido una mala persona. 
-                Lamento profundamente todas mis acciones, las decisiones equivocadas 
-                que tomé y el dolor que te causé.
+                Quiero empezar disculpándome por haber sido una mala persona.
+                Lamento profundamente todas mis acciones y el dolor que te causé.
             </p>
             <p>
-                No hay excusas para mi comportamiento, y me arrepiento de cada momento 
-                en que te hice sentir menos de lo que mereces. Al final, yo solo seré 
-                un recuerdo borroso de tu pasado, un capítulo cerrado que espero 
-                puedas dejar atrás sin resentimiento.
+                No hay excusas. Solo arrepentimiento sincero.
+                Espero que puedas recordar esto sin tristeza.
             </p>
             <p>
-                Sin embargo, siempre serás parte de mí. Tu presencia marcó un antes 
-                y un después en mi vida. Te deseo toda la felicidad del mundo. 
+                Siempre serás parte de mí.
                 Te amaré en silencio, desde lejos.
             </p>
             <p class="signature">
-                Con todo mi amor...
-                jhon
+                Con todo mi amor…<br>
+                Jhon
             </p>
         </div>
+
         <div class="hint">Toca el sobre para abrir</div>
     </div>
 </div>
