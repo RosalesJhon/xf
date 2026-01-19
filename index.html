@@ -1,85 +1,152 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carta Interactiva</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .envelope {
-            width: 300px;
-            height: 200px;
-            background-color: #d4a574;
-            border: 2px solid #8b4513;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.5s;
-        }
-        .envelope::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 50%;
-            background-color: #f4e4bc;
-            clip-path: polygon(0 0, 100% 0, 50% 100%);
-            transition: transform 0.5s;
-        }
-        .envelope.open {
-            transform: rotateY(180deg);
-        }
-        .envelope.open::before {
-            transform: translateY(-100%);
-        }
-        .letter {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            bottom: 20px;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            opacity: 0;
-            transform: scale(0.8);
-            transition: opacity 0.5s, transform 0.5s;
-            font-size: 16px;
-            line-height: 1.6;
-            color: #333;
-        }
-        .envelope.open .letter {
-            opacity: 1;
-            transform: scale(1);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carta Interactiva</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: radial-gradient(circle at top, #2c2c2c, #0f0f0f);
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .scene {
+        perspective: 1000px;
+    }
+
+    .envelope {
+        width: 320px;
+        height: 220px;
+        position: relative;
+        background: linear-gradient(145deg, #d8b98a, #c49a6c);
+        border-radius: 6px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        cursor: pointer;
+        transform-style: preserve-3d;
+        transition: transform 0.8s ease;
+    }
+
+    .envelope.open {
+        transform: rotateX(15deg);
+    }
+
+    /* Solapa */
+    .flap {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(145deg, #e7cfaa, #d4b07c);
+        clip-path: polygon(0 0, 100% 0, 50% 55%);
+        transform-origin: top;
+        transition: transform 0.8s ease;
+        z-index: 3;
+    }
+
+    .envelope.open .flap {
+        transform: rotateX(-160deg);
+    }
+
+    /* Carta */
+    .letter {
+        position: absolute;
+        inset: 15px;
+        background: #fffdf8;
+        padding: 22px;
+        box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+        border-radius: 4px;
+        transform: translateY(40px) scale(0.95);
+        opacity: 0;
+        transition: all 0.8s ease;
+        z-index: 1;
+        overflow-y: auto;
+    }
+
+    .envelope.open .letter {
+        transform: translateY(-10px) scale(1);
+        opacity: 1;
+    }
+
+    .letter p {
+        margin: 0 0 10px;
+        font-size: 15px;
+        line-height: 1.6;
+        color: #333;
+    }
+
+    .letter strong {
+        font-family: 'Playfair Display', serif;
+        font-size: 18px;
+    }
+
+    .signature {
+        margin-top: 15px;
+        font-style: italic;
+    }
+
+    /* Indicador */
+    .hint {
+        position: absolute;
+        bottom: -40px;
+        width: 100%;
+        text-align: center;
+        font-size: 13px;
+        color: #bbb;
+        letter-spacing: 1px;
+    }
+</style>
 </head>
+
 <body>
+<div class="scene">
     <div class="envelope" onclick="toggleEnvelope()">
+        <div class="flap"></div>
         <div class="letter">
             <p><strong>Para Zarela Rodríguez</strong></p>
             <p><em>De mí</em></p>
             <p>Querida Zarela,</p>
-            <p>Quiero empezar disculpándome por haber sido una mala persona. Lamento profundamente todas mis acciones, las decisiones equivocadas que tomé y el dolor que te causé. No hay excusas para mi comportamiento, y me arrepiento de cada momento en que te hice sentir menos de lo que mereces.</p>
-            <p>Al final, yo solo seré un recuerdo borroso de tu pasado, un capítulo cerrado que espero que puedas dejar atrás sin resentimiento.</p>
-            <p>Sin embargo, siempre serás parte de mí. Tu presencia en mi vida ha marcado un antes y un después, y aunque nos separemos, llevaré contigo en mi corazón.</p>
-            <p>Me despido deseándote toda la felicidad del mundo. Te veré de lejos, admirando tu fuerza y tu luz, y quiero que sepas que te amo mucho. Que encuentres la paz y el amor que mereces.</p>
-            <p>Con todo mi cariño,<br>Tu amigo/a</p>
+            <p>
+                Quiero empezar disculpándome por haber sido una mala persona.
+                Lamento profundamente todas mis acciones, las decisiones equivocadas
+                que tomé y el dolor que te causé.
+            </p>
+            <p>
+                No hay excusas para mi comportamiento, y me arrepiento de cada momento
+                en que te hice sentir menos de lo que mereces.
+            </p>
+            <p>
+                Al final, yo solo seré un recuerdo borroso de tu pasado,
+                un capítulo cerrado que espero puedas dejar atrás sin resentimiento.
+            </p>
+            <p>
+                Sin embargo, siempre serás parte de mí.
+                Tu presencia marcó un antes y un después en mi vida.
+            </p>
+            <p>
+                Te deseo toda la felicidad del mundo.
+                Te amaré en silencio, desde lejos.
+            </p>
+            <p class="signature">
+                Con todo mi cariño,<br>
+                Tu amigo/a
+            </p>
         </div>
+        <div class="hint">Haz clic para abrir</div>
     </div>
-    <script>
-        function toggleEnvelope() {
-            const envelope = document.querySelector('.envelope');
-            envelope.classList.toggle('open');
-        }
-    </script>
+</div>
+
+<script>
+function toggleEnvelope() {
+    document.querySelector('.envelope').classList.toggle('open');
+}
+</script>
 </body>
 </html>
