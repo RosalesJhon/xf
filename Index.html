@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carta Interactiva</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .envelope {
+            width: 300px;
+            height: 200px;
+            background-color: #d4a574;
+            border: 2px solid #8b4513;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.5s;
+        }
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background-color: #f4e4bc;
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transition: transform 0.5s;
+        }
+        .envelope.open {
+            transform: rotateY(180deg);
+        }
+        .envelope.open::before {
+            transform: translateY(-100%);
+        }
+        .letter {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.5s, transform 0.5s;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .envelope.open .letter {
+            opacity: 1;
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body>
+    <div class="envelope" onclick="toggleEnvelope()">
+        <div class="letter">
+            <p><strong>Para Zarela Rodríguez</strong></p>
+            <p><em>De mí</em></p>
+            <p>Querida Zarela,</p>
+            <p>Quiero empezar disculpándome por haber sido una mala persona. Lamento profundamente todas mis acciones, las decisiones equivocadas que tomé y el dolor que te causé. No hay excusas para mi comportamiento, y me arrepiento de cada momento en que te hice sentir menos de lo que mereces.</p>
+            <p>Al final, yo solo seré un recuerdo borroso de tu pasado, un capítulo cerrado que espero que puedas dejar atrás sin resentimiento.</p>
+            <p>Sin embargo, siempre serás parte de mí. Tu presencia en mi vida ha marcado un antes y un después, y aunque nos separemos, llevaré contigo en mi corazón.</p>
+            <p>Me despido deseándote toda la felicidad del mundo. Te veré de lejos, admirando tu fuerza y tu luz, y quiero que sepas que te amo mucho. Que encuentres la paz y el amor que mereces.</p>
+            <p>Con todo mi cariño,<br>Tu amigo/a</p>
+        </div>
+    </div>
+    <script>
+        function toggleEnvelope() {
+            const envelope = document.querySelector('.envelope');
+            envelope.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
